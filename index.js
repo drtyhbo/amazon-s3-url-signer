@@ -23,14 +23,14 @@ exports.urlSigner = function(key, secret, options){
   };
 
   return {
-    getUrl : function(verb, fname, bucket, expiresInMinutes){
+    getUrl : function(verb, fname, bucket, contentType, expiresInMinutes){
       var expires = new Date();
 
       expires.setMinutes(expires.getMinutes() + expiresInMinutes);
 
       var epo = Math.floor(expires.getTime()/1000);
 
-      var str = verb + '\n\n\n' + epo + '\n' + '/' + bucket + (fname[0] === '/'?'':'/') + fname;
+      var str = verb + '\n\n' + contentType + '\n' + epo + '\n' + '/' + bucket + (fname[0] === '/'?'':'/') + fname;
 
       var hashed = hmacSha1(str);
 
